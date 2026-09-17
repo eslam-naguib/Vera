@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signor Developer Cockpit | مركز التحكم المعماري</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="cockpit-container">
+    <!-- Header -->
+    <header class="cockpit-header">
+      <div class="brand">
+        <div class="logo-badge">⚡</div>
+        <div>
+          <h1>Signor Developer Cockpit</h1>
+          <p class="subtitle">مركز التحكم الشامل بالنماذج والمجهود الهندسي المعماري</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="status-pill online" id="serverStatusPill">
+          <span class="dot"></span>
+          <span id="serverStatusText">متصل محلياً (5050)</span>
+        </div>
+        <button id="btnQuickPing" class="btn btn-secondary">
+          <span class="icon">📡</span> فحص الاتصال السريع
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <main class="cockpit-grid">
+      <!-- Left Column: Controls & Configuration -->
+      <section class="card config-card">
+        <div class="card-header">
+          <h2>🎛️ لوحة التحكم والإعدادات (Controls)</h2>
+          <div class="scope-toggle">
+            <label class="radio-label">
+              <input type="radio" name="targetScope" value="local" checked>
+              <span>المشروع الحالي (.signor)</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="targetScope" value="global">
+              <span>الإعدادات العامة (Global)</span>
+            </label>
+          </div>
+        </div>
+
+        <form id="configForm" class="config-form">
+          <!-- Active Model Selector -->
+          <div class="form-group">
+            <label for="modelSelect">النموذج النشط (Active AI Model)</label>
+            <div class="select-wrapper">
+              <select id="modelSelect" name="model" class="form-control">
+                <option value="gpt-5.6-sol" selected>GPT-5.6 Sol (Lead Architect & QA Lead)</option>
+                <option value="gpt-5.6-terra">GPT-5.6 Terra (Infrastructure & Scalability)</option>
+                <option value="gpt-5.5">GPT-5.5 (High-Accuracy Logic)</option>
+                <option value="gpt-5-codex">GPT-5 Codex (Deep Code Engineering)</option>
+              </select>
+            </div>
+            <small class="hint">يتحكم هذا الخيار في العقل المدبر المنفذ لعمليات signor plan و review و audit.</small>
+          </div>
+
+          <!-- Effort Level -->
+          <div class="form-group">
+            <label>مستوى المجهود المعماري (Architectural Effort)</label>
+            <div class="effort-selector" id="effortSelector">
+              <button type="button" class="effort-btn" data-effort="low">
+                <span class="effort-title">Low</span>
+                <span class="effort-meta">1.5k tok • 60s</span>
+              </button>
+              <button type="button" class="effort-btn" data-effort="medium">
+                <span class="effort-title">Medium</span>
+                <span class="effort-meta">3k tok • 180s</span>
+              </button>
+              <button type="button" class="effort-btn active" data-effort="high">
+                <span class="effort-title">High</span>
+                <span class="effort-meta">5k tok • 420s</span>
+              </button>
+              <button type="button" class="effort-btn" data-effort="ultra">
+                <span class="effort-title">Ultra</span>
+                <span class="effort-meta">8k tok • 600s</span>
+              </button>
+            </div>
+            <input type="hidden" id="effortInput" name="effort" value="high">
+          </div>
+
+          <!-- Base URL -->
+          <div class="form-group">
+            <label for="baseUrlInput">نقطة الوصول (API Base URL)</label>
+            <div class="input-with-action">
+              <input type="text" id="baseUrlInput" name="base_url" class="form-control ltr-input" placeholder="https://api.code.signor.ai/v1">
+              <button type="button" id="btnPresetUrl" class="btn btn-icon" title="استرجاع الافتراضي">↺</button>
+            </div>
+          </div>
+
+          <!-- API Key Masked -->
+          <div class="form-group">
+            <label for="apiKeyInput">مفتاح الوصول (API Key)</label>
+            <input type="password" id="apiKeyInput" name="api_key" class="form-control ltr-input" placeholder="sk-...">
+            <div id="apiKeyLoadedBadge" style="color:#34d399;font-size:12px;display:flex;align-items:center;gap:6px;margin-top:4px;">
+              <span>✅</span> <span>مفتاح API نشط ومحمل تلقائياً من إعدادات المشروع (لا تحتاج لإدخاله مجدداً إلا إذا رغبت في تغييره).</span>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="form-footer">
+            <button type="submit" class="btn btn-primary" id="btnSaveConfig">
+              💾 حفظ الإعدادات وتطبيقها فوراً
+            </button>
+            <span id="saveStatus" class="save-status"></span>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Model Health Radar & Live Terminal -->
+      <div class="side-column">
+        <!-- Model Health Radar -->
+        <section class="card radar-card">
+          <div class="card-header">
+            <h2>📡 رادار النماذج (Model Health Radar)</h2>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <button id="btnResetModels" class="btn btn-sm btn-ghost" title="استرجاع كافة النماذج المحذوفة أو المخفية">↺ استرجاع الكل</button>
+              <button id="btnToggleHidden" class="btn btn-sm btn-secondary" title="إظهار النماذج المستبعدة">
+                👁️ المستبعدة (<span id="hiddenCountBadge">0</span>)
+              </button>
+              <button id="btnScanAll" class="btn btn-sm btn-primary">
+                ⚡ فحص الكل
+              </button>
+            </div>
+          </div>
+          <div class="radar-list" id="radarList">
+            <div class="radar-skeleton">جاري تحميل حالة النماذج...</div>
+          </div>
+        </section>
+
+        <!-- Live Quick Console -->
+        <section class="card console-card">
+          <div class="card-header">
+            <h2>💬 سجل وسائط الاستجابة (Live Terminal)</h2>
+            <button id="btnClearLog" class="btn btn-sm btn-ghost">مسح</button>
+          </div>
+          <div class="console-output" id="consoleOutput">
+            <div class="log-entry info">[System] Developer Cockpit initialized. Ready on port 5050.</div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="cockpit-footer">
+      <div>Signor Global Architectural Engine • v1.0.0</div>
+      <div id="projectPathDisplay" class="project-path">Directory: ...</div>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

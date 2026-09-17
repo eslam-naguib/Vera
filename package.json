@@ -1,0 +1,60 @@
+{
+  "name": "signor",
+  "version": "2.1.0",
+  "description": "Signor AI — Global AI Architect CLI & Real-Time Developer Cockpit",
+  "type": "module",
+  "main": "./lib/index.mjs",
+  "bin": {
+    "signor": "./bin/signor.mjs"
+  },
+  "exports": {
+    ".": "./lib/index.mjs",
+    "./engine": "./lib/engine.mjs",
+    "./config": "./lib/config.mjs",
+    "./db": "./lib/db.mjs",
+    "./tools": "./lib/tools.mjs",
+    "./security": "./lib/security.mjs",
+    "./secrets": "./lib/secrets.mjs",
+    "./atomic": "./lib/atomic.mjs",
+    "./errors": "./lib/errors.mjs",
+    "./schema": "./lib/schema.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/run_all.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "node --check bin/signor.mjs lib/*.mjs cockpit/*.mjs tests/*.mjs",
+    "start": "node cockpit/server.mjs"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eslam-naguib/signor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eslam-naguib/signor/issues"
+  },
+  "homepage": "https://github.com/eslam-naguib/signor#readme",
+  "files": [
+    "bin",
+    "lib",
+    "cockpit",
+    "types",
+    "SIGNOR_GUIDE.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "signor",
+    "ai-architect",
+    "code-review",
+    "developer-cockpit",
+    "quality-gate",
+    "acid-ledger",
+    "llm-agent",
+    "cli"
+  ],
+  "author": "Eslam Naguib",
+  "license": "MIT"
+}
