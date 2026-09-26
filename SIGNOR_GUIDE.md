@@ -123,6 +123,9 @@ signor debate "بناء منصة تسويق عقاري" --agent1 astra --agent2 
 # 2. مناظرة بين نموذجين مختلفين (Astra 6 ضد Fable 5.1):
 signor debate "بناء منصة تسويق عقاري" --agent1 astra --agent2 fable --effort1 medium --effort2 medium
 
+# 3. مناظرة عابرة للمزودين (Cross-Provider Duel: Signor Astra 6 ضد Anthropic Fable 5.1):
+signor debate "بناء منصة تسويق عقاري" --agent1 astra --provider1 signor --agent2 fable --provider2 anthropic
+
 # أو تشغيلها كـ Flag داخل أمر الخطة المعتاد:
 signor plan "بناء منصة تسويق عقاري" --debate --agent1 astra --agent2 fable
 ```

@@ -4,5 +4,6 @@ import "./errors.test.mjs";
 import "./db.test.mjs";
 import "./p3.test.mjs";
 import "./debate.test.mjs";
+import "./providers.test.mjs";
 
 console.log("🧪 All test suites loaded and executed via node:test.");

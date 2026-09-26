@@ -17,7 +17,9 @@
     "./secrets": "./lib/secrets.mjs",
     "./atomic": "./lib/atomic.mjs",
     "./errors": "./lib/errors.mjs",
-    "./schema": "./lib/schema.mjs"
+    "./schema": "./lib/schema.mjs",
+    "./debate": "./lib/debate/orchestrator.mjs",
+    "./providers": "./lib/providers/index.mjs"
   },
   "scripts": {
     "test": "node --test tests/run_all.mjs",
