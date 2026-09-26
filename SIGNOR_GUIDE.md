@@ -114,6 +114,21 @@ signor plan "بناء نظام المدفوعات والاشتراكات الش�
 
 ---
 
+### أ-2. المناظرة المعمارية متعددة الوكلاء (`signor debate`)
+لإشراك وكيلي ذكاء اصطناعي في حوار ونقد متبادل للوصول لأفضل حل وتفادي النقاط العمياء:
+```bash
+# 1. مناظرة القبعات الفكرية (Red vs Blue Hat) لنفس النموذج:
+signor debate "بناء منصة تسويق عقاري" --agent1 astra --agent2 astra --hats --effort1 medium --effort2 medium
+
+# 2. مناظرة بين نموذجين مختلفين (Astra 6 ضد Fable 5.1):
+signor debate "بناء منصة تسويق عقاري" --agent1 astra --agent2 fable --effort1 medium --effort2 medium
+
+# أو تشغيلها كـ Flag داخل أمر الخطة المعتاد:
+signor plan "بناء منصة تسويق عقاري" --debate --agent1 astra --agent2 fable
+```
+
+---
+
 ### ب. فحص ومراجعة الكود السريعة (`signor review`)
 استخدم هذا الأمر بعد إجراء التعديلات أو قبل عمل Commit / PR لمراجعة الكود بدقة:
 ```bash

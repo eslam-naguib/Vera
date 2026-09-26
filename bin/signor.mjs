@@ -5,6 +5,8 @@ import { handleModels } from "../lib/commands/models.mjs";
 import { handleConfig } from "../lib/commands/config.mjs";
 import { handleInit } from "../lib/commands/init.mjs";
 import { handlePlan } from "../lib/commands/plan.mjs";
+import { handleAsk } from "../lib/commands/ask.mjs";
+import { handleDebate } from "../lib/commands/debate.mjs";
 import { handleReview } from "../lib/commands/review.mjs";
 import { handleAudit } from "../lib/commands/audit.mjs";
 import { handleCockpit } from "../lib/commands/cockpit.mjs";
@@ -68,8 +70,18 @@ async function run() {
       await handleInit(commandArgs, config);
       break;
 
+    case "ask":
+    case "chat":
+      await handleAsk(commandArgs.join(" "), config);
+      break;
+
     case "plan":
-      await handlePlan(commandArgs.join(" "), config);
+      await handlePlan(commandArgs, config);
+      break;
+
+    case "debate":
+    case "duel":
+      await handleDebate(commandArgs, config);
       break;
 
     case "review":
@@ -86,7 +98,7 @@ async function run() {
 
     case "-v":
     case "--version":
-      console.log("Signor AI CLI v2.0.0 (Production Hardened)");
+      console.log("Signor AI CLI v2.1.0 (Production Hardened)");
       break;
 
     case "-h":
@@ -102,7 +114,9 @@ async function run() {
   \x1b[32mping\x1b[0m                     Test connectivity to active model & base URL
   \x1b[32mmodels\x1b[0m                   Display model registry & real-time health radar
   \x1b[32mcockpit [start|status]\x1b[0m   Launch Developer Cockpit Web UI on http://localhost:5050
+  \x1b[32mask "<query>"\x1b[0m            Ask Sol / active model directly with real-time streaming
   \x1b[32mplan "<task>"\x1b[0m            Generate comprehensive architectural master plan
+  \x1b[32mdebate "<task>"\x1b[0m          Multi-Agent adversarial debate (Red vs Blue Hat or Multi-Model)
   \x1b[32mreview\x1b[0m                   Conduct QA code inspection against approved plan
   \x1b[32maudit\x1b[0m                    Perform full-spectrum system & security audit
   \x1b[32mconfig show\x1b[0m              Display active configuration & effort mapping

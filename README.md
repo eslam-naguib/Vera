@@ -137,7 +137,9 @@ signor cockpit stop
 | `signor ping` | Test upstream API latency and model availability |
 | `signor models` | Display model health radar and latency metrics |
 | `signor init` | Initialize Signor workspace in current directory |
+| `signor ask "<query>"` | Consult model directly with real-time streaming |
 | `signor plan "<task>"` | Formulate architectural master plan in Arabic |
+| `signor debate "<task>"` | Multi-agent adversarial debate (Red vs Blue Hat or Multi-Model) |
 | `signor review [path]` | Run deterministic quality gate + live streaming code review |
 | `signor audit` | Perform full-spectrum architectural and security audit |
 | `signor cockpit [start\|stop\|status]` | Manage local developer dashboard web server |
