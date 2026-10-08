@@ -1,10 +1,11 @@
 {
-  "name": "signor",
-  "version": "2.1.0",
-  "description": "Signor AI — Global AI Architect CLI & Real-Time Developer Cockpit",
+  "name": "vera",
+  "version": "2.2.0",
+  "description": "Vera AI — Autonomous AI Principal Architect & Code Engineer",
   "type": "module",
   "main": "./lib/index.mjs",
   "bin": {
+    "vera": "./bin/vera.mjs",
     "signor": "./bin/signor.mjs"
   },
   "exports": {
@@ -19,12 +20,15 @@
     "./errors": "./lib/errors.mjs",
     "./schema": "./lib/schema.mjs",
     "./debate": "./lib/debate/orchestrator.mjs",
-    "./providers": "./lib/providers/index.mjs"
+    "./providers": "./lib/providers/index.mjs",
+    "./context": "./lib/context/index.mjs",
+    "./brand": "./lib/brand.mjs",
+    "./safety": "./lib/safety/changeset.mjs"
   },
   "scripts": {
     "test": "node --test tests/run_all.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "node --check bin/signor.mjs lib/*.mjs cockpit/*.mjs tests/*.mjs",
+    "lint": "node --check bin/vera.mjs bin/signor.mjs lib/*.mjs cockpit/*.mjs tests/*.mjs",
     "start": "node cockpit/server.mjs"
   },
   "engines": {
@@ -48,6 +52,7 @@
     "LICENSE"
   ],
   "keywords": [
+    "vera",
     "signor",
     "ai-architect",
     "code-review",
