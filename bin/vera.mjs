@@ -12,6 +12,7 @@ import { handleReview } from "../lib/commands/review.mjs";
 import { handleAudit } from "../lib/commands/audit.mjs";
 import { handleCockpit } from "../lib/commands/cockpit.mjs";
 import { handleInstallSkill } from "../lib/commands/install_skill.mjs";
+import { normalizeModelId } from "../lib/debate/orchestrator.mjs";
 import { SignorError } from "../lib/errors.mjs";
 
 const rawArgs = process.argv.slice(2);
@@ -36,7 +37,7 @@ for (const arg of rawArgs) {
 for (let i = 0; i < cleanTokens.length; i++) {
   let arg = cleanTokens[i].replace(/^\\?["']+|\\?["']+$/g, "").trim();
   if (arg === "--model" && cleanTokens[i + 1]) {
-    cliOverrides.model = cleanTokens[++i].replace(/^\\?["']+|\\?["']+$/g, "").trim();
+    cliOverrides.model = normalizeModelId(cleanTokens[++i].replace(/^\\?["']+|\\?["']+$/g, "").trim());
   } else if (arg === "--effort" && cleanTokens[i + 1]) {
     cliOverrides.effort = cleanTokens[++i].replace(/^\\?["']+|\\?["']+$/g, "").trim();
   } else if (arg === "--base-url" && cleanTokens[i + 1]) {

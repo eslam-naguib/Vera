@@ -9,5 +9,8 @@ import "./context.test.mjs";
 import "./changeset.test.mjs";
 import "./tools.test.mjs";
 import "./brand.test.mjs";
+import "./init.test.mjs";
+import "./db_acid.test.mjs";
+import "./no_mock_prod.test.mjs";
 
 console.log("🧪 All test suites loaded and executed via node:test.");

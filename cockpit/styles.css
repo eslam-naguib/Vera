@@ -1,14 +1,14 @@
 :root {
-  --bg-main: #0a0e17;
-  --bg-card: #121826;
-  --bg-card-hover: #172033;
-  --bg-input: #0e1422;
-  --border-color: #222d45;
-  --border-glow: #3b82f6;
-  --text-main: #f1f5f9;
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #334155;
+  --bg-input: #0f172a;
+  --border-color: #334155;
+  --border-glow: #0d9488;
+  --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --accent-cyan: #06b6d4;
-  --accent-blue: #3b82f6;
+  --accent-cyan: #0d9488;
+  --accent-blue: #0d9488;
   --accent-amber: #f59e0b;
   --accent-emerald: #10b981;
   --accent-rose: #f43f5e;
