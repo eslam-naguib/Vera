@@ -6,6 +6,7 @@
   "main": "./lib/index.mjs",
   "bin": {
     "vera": "./bin/vera.mjs",
+    "vera-mcp": "./bin/vera-mcp.mjs",
     "signor": "./bin/signor.mjs"
   },
   "exports": {
@@ -28,8 +29,9 @@
   "scripts": {
     "test": "node --test tests/run_all.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "node --check bin/vera.mjs bin/signor.mjs lib/*.mjs cockpit/*.mjs tests/*.mjs",
-    "start": "node cockpit/server.mjs"
+    "lint": "node --check bin/vera.mjs bin/vera-mcp.mjs bin/signor.mjs lib/*.mjs cockpit/*.mjs tests/*.mjs scripts/*.mjs",
+    "start": "node cockpit/server.mjs",
+    "setup:mcp": "node scripts/setup_mcp.mjs"
   },
   "engines": {
     "node": ">=22.0.0"

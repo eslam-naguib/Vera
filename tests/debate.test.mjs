@@ -15,12 +15,13 @@ import {
 } from "../lib/db.mjs";
 
 test("debate: normalizeModelId correctly maps model aliases", () => {
-  assert.strictEqual(normalizeModelId("astra"), "gpt-6-astra");
-  assert.strictEqual(normalizeModelId("astra6"), "gpt-6-astra");
+  assert.strictEqual(normalizeModelId("astra"), "gpt-6-astra-g");
+  assert.strictEqual(normalizeModelId("astra6"), "gpt-6-astra-g");
   assert.strictEqual(normalizeModelId("fable"), "claude-fable-5-1");
   assert.strictEqual(normalizeModelId("fable-5.1"), "claude-fable-5-1");
   assert.strictEqual(normalizeModelId("sol"), "gpt-5.6-sol");
   assert.strictEqual(normalizeModelId("terra"), "gpt-5.6-terra");
+  assert.strictEqual(normalizeModelId("opus"), "claude-opus-5-5");
   assert.strictEqual(normalizeModelId("custom-model"), "custom-model");
 });
 
