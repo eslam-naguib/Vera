@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
+import { execSync } from "node:child_process";
 
 const homeDir = os.homedir();
 const targets = [
@@ -210,7 +211,18 @@ export function setupMcp() {
   }
   if (!mcpConfig.mcpServers) mcpConfig.mcpServers = {};
 
-  const serverBin = path.resolve(process.cwd(), "bin", "vera-mcp.mjs").replace(/\\/g, "/");
+  // Resolve 8.3 short path on Windows to prevent OEM code page issues with non-ASCII directory names
+  let projectBase = process.cwd();
+  if (process.platform === "win32") {
+    try {
+      const out = execSync(`powershell -NoProfile -Command "(New-Object -ComObject Scripting.FileSystemObject).GetFolder((Get-Location).Path).ShortPath"`, { encoding: "utf-8" }).trim();
+      if (out && fs.existsSync(out)) {
+        projectBase = out;
+      }
+    } catch {}
+  }
+
+  const serverBin = path.join(projectBase, "bin", "vera-mcp.mjs").replace(/\\/g, "/");
   mcpConfig.mcpServers.vera = {
     command: "node",
     args: [serverBin]
@@ -219,6 +231,38 @@ export function setupMcp() {
   fs.writeFileSync(configPath, JSON.stringify(mcpConfig, null, 2), "utf-8");
   console.log(`\n🎉 MCP Config Updated: ${configPath}`);
   console.log(`   Registered 'vera' server -> ${serverBin}`);
+
+  // Global npm wrappers in AppData/Roaming/npm
+  const npmGlobalDir = path.join(homeDir, "AppData", "Roaming", "npm");
+  if (fs.existsSync(npmGlobalDir)) {
+    const veraBin = path.join(projectBase, "bin", "vera.mjs");
+    const veraMcpBin = path.join(projectBase, "bin", "vera-mcp.mjs");
+
+    const veraCmdContent = `@ECHO off\r\nnode "${veraBin}" %*\r\n`;
+    fs.writeFileSync(path.join(npmGlobalDir, "vera.cmd"), veraCmdContent, "utf-8");
+
+    const veraMcpCmdContent = `@ECHO off\r\nnode "${veraMcpBin}" %*\r\n`;
+    fs.writeFileSync(path.join(npmGlobalDir, "vera-mcp.cmd"), veraMcpCmdContent, "utf-8");
+
+    const veraPs1Content = `#!/usr/bin/env pwsh\r\n& node "${veraBin}" @args\r\n`;
+    fs.writeFileSync(path.join(npmGlobalDir, "vera.ps1"), veraPs1Content, "utf-8");
+
+    const veraMcpPs1Content = `#!/usr/bin/env pwsh\r\n& node "${veraMcpBin}" @args\r\n`;
+    fs.writeFileSync(path.join(npmGlobalDir, "vera-mcp.ps1"), veraMcpPs1Content, "utf-8");
+
+    // Repair npm node_modules/vera junction if present
+    const junctionPath = path.join(npmGlobalDir, "node_modules", "vera");
+    try {
+      if (fs.existsSync(junctionPath)) {
+        fs.rmSync(junctionPath, { recursive: true, force: true });
+      }
+      fs.symlinkSync(projectBase, junctionPath, "junction");
+      console.log(`  ✔ Global junction repaired: ${junctionPath} -> ${projectBase}`);
+    } catch {}
+
+    console.log(`  ✔ Global CLI wrapper updated: ${path.join(npmGlobalDir, "vera.cmd")}`);
+    console.log(`  ✔ Global MCP wrapper created: ${path.join(npmGlobalDir, "vera-mcp.cmd")}`);
+  }
 }
 
 import { fileURLToPath } from "node:url";
